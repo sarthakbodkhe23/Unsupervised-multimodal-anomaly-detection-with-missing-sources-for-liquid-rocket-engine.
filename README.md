@@ -17,7 +17,7 @@ The project was built and evaluated on the NASA C-MAPSS turbofan engine degradat
 Most anomaly detection systems assume every sensor is always available — an assumption that rarely holds in the field. We wanted to:
 
 
--Study how a multimodal autoencoder can be trained only on unsupervised, healthy-operation data (no anomaly labels required)
--Simulate and explicitly handle randomly missing sensor sources rather than ignoring the problem
--Represent 1-D sensor signals in a form a CNN can process, using the GAF image transform
--Practice building a full deep-learning pipeline: data loading → representation learning → dual-stage reconstruction → loss design → evaluation
+- Study how a multimodal autoencoder can be trained only on unsupervised, healthy-operation data (no anomaly labels required).
+- Simulate and explicitly handle randomly missing sensor sources rather than ignoring the problem.
+- Represent 1-D sensor signals in a form a CNN can process, using the GAF image transform.
+- Practice building a full deep-learning pipeline: data loading → representation learning → dual-stage reconstruction → loss design → evaluation.
