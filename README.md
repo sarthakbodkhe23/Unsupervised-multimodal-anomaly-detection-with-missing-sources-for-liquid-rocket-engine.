@@ -38,11 +38,38 @@ Most anomaly detection systems assume every sensor is always available — an as
 
 - 7 near-constant sensors dropped (s1, s5, s6, s10, s16, s18, s19) — near-zero variance under this operating regime, would dilute model attention
 - 14 remaining sensors grouped into 3 physical modalities:
-| Modality | Sensors | Description |
-|---|---|---|
-| Temperature | s2, s3, s4, s11 | Fan/core inlet & outlet temperatures |
-| Pressure | s7, s8, s12, s13, s15 | Total/static pressure at various engine stages |
-| Mechanical | s9, s14, s17, s20, s21 | Shaft speeds, bleed enthalpy, efficiency ratios |
+ | Modality
+ | Sensors
+ | Description
+ |
+ |
+ ---
+ |
+ ---
+ |
+ ---
+ |
+ |
+ Temperature
+ |
+ s2, s3, s4, s11
+ |
+ Fan/core inlet & outlet temperatures
+ |
+ |
+ Pressure
+ |
+ s7, s8, s12, s13, s15
+ |
+ Total/static pressure at various engine stages
+ |
+ |
+ Mechanical
+ |
+ s9, s14, s17, s20, s21
+ |
+ Shaft speeds, bleed enthalpy, efficiency ratios
+ |
 
 
 
