@@ -37,60 +37,22 @@ Most anomaly detection systems assume every sensor is always available — an as
 
 
 - 7 near-constant sensors dropped (s1, s5, s6, s10, s16, s18, s19) — near-zero variance under this operating regime, would dilute model attention
-   
-|
-Modality
-|
-Sensors
-|
-Description
-|
-|
----
- |
- ---
- |
- ---
- |
- |
- Temperature
- |
- s2, s3, s4, s11
- |
- Fan/core inlet & outlet temperatures
- |
- |
- Pressure
- |
- s7, s8, s12, s13, s15
- |
- Total/static pressure at various engine stages
- |
- |
- Mechanical
- |
- s9, s14, s17, s20, s21
- |
- Shaft speeds, bleed enthalpy, efficiency ratios
- |
-
-
-
+- 14 remaining sensors grouped into 3 physical modalities such as temperature, pressure,mechanical etc
 - Per-sensor Min-Max normalisation to [0, 1], since raw units differ vastly (°R, psia, rpm)
 - Only the first 50 cycles per engine are used for training, treated as the healthy/normal regime (validated against the dataset's minimum engine lifetime of ~120 cycles)
 
 
-Tools Used
+# Tools Used
 
 
-Python — data loading, preprocessing, model implementation
-PyTorch — UU-Net architecture, training loop, autograd
-pyts (GramianAngularField) — 1-D → 2-D time series transformation
-NumPy / pandas — array handling, missing-mask simulation, sensor parsing
-Matplotlib / Seaborn — sensor degradation plots, lifetime distributions, GAF visualisations
+- Python — data loading, preprocessing, model implementation
+- PyTorch — UU-Net architecture, training loop, autograd
+- pyts (GramianAngularField) — 1-D → 2-D time series transformation
+- NumPy / pandas — array handling, missing-mask simulation, sensor parsing
+- Matplotlib / Seaborn — sensor degradation plots, lifetime distributions, GAF visualisations
 
 
-Method
+# Method
 
 1. Time-series → image representation (GAF)
 
@@ -123,35 +85,12 @@ The full UU-Net formulation also defines a discrepancy loss term (S = Lr1 + Lr2 
 
 At inference, the combined reconstruction error across both stages serves as the anomaly score; a threshold is set from the reconstruction-error distribution on healthy training data using Kernel Density Estimation (KDE).
 
-Key Insights from Visualisation
+# Key Insights from Visualisation
 
 
-Individual sensor degradation is subtle and noisy early on but shows visible drift (e.g. sensors s11, s20) approaching failure — justifying the healthy-window training strategy
-Engine lifetimes across the fleet are right-skewed, averaging ~206 cycles, confirming that a fixed run-to-failure assumption would be inaccurate
-The 1-D→2-D GAF transform visibly preserves temporal structure: the main diagonal reflects raw signal values, while off-diagonal regions capture temporal correlations that highlight anomalous, irregular patterns
+- Individual sensor degradation is subtle and noisy early on but shows visible drift (e.g. sensors s11, s20) approaching failure — justifying the healthy-window training strategy
+- Engine lifetimes across the fleet are right-skewed, averaging ~206 cycles, confirming that a fixed run-to-failure assumption would be inaccurate
+- The 1-D→2-D GAF transform visibly preserves temporal structure: the main diagonal reflects raw signal values, while off-diagonal regions capture temporal correlations that highlight anomalous, irregular patterns
 
 
-Repository Structure
 
-├── data/                 # C-MAPSS raw data (train/test/RUL files, per FD subset)
-├── dashboard/            # Visualisation / results dashboard
-├── notebook/             # Main implementation notebook (UU-Net pipeline)
-└── README.md
-
-Team
-
-Machine Learning and Deep Learning Lab (AM620L) — Department of Applied Mathematics
-Defence Institute of Advanced Technology (DIAT), Pune
-
-
-Tuhinsubra Sen
-Sarthak Bodkhe
-Niyati Patil
-Dev Solanki
-
-
-Notes & Limitations
-
-
-The discrepancy loss term from the original UU-Net formulation is simplified in this implementation (loss = Lr1 + Lr2) to avoid latent-dimension mismatch during execution; the structural design otherwise follows the two-stage cascaded reconstruction described above.
-This project uses the C-MAPSS turbofan dataset as a general-purpose multi-sensor benchmark for studying missing-source robustness in unsupervised anomaly detection.
