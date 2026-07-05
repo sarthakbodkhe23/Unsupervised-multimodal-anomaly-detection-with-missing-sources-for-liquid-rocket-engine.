@@ -37,7 +37,7 @@ Most anomaly detection systems assume every sensor is always available — an as
 
 
 - 7 near-constant sensors dropped (s1, s5, s6, s10, s16, s18, s19) — near-zero variance under this operating regime, would dilute model attention
-- 
+   
  | Modality
  | Sensors
  | Description
